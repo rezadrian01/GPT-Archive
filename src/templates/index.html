@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <title>GPTArchive</title>
+  </head>
+  <body class="bg-neutral-800 text-white">
+    <!-- Title from backend: {{ text }} -->
+    <div class="grid grid-cols-10 gap-4 p-10">
+      <!-- Sidebar -->
+      <div class="col-span-2">
+        <ul class="flex flex-col gap-2">
+          <li
+            class="cursor-pointer rounded bg-neutral-600 px-3 py-1 transition-all"
+          >
+            <a href="#"> CONV 1 </a>
+          </li>
+          <li
+            class="cursor-pointer rounded hover:bg-neutral-600 px-3 py-1 transition-all"
+          >
+            <a href="#"> CONV 2 </a>
+          </li>
+          <li
+            class="cursor-pointer rounded hover:bg-neutral-600 px-3 py-1 transition-all"
+          >
+            <a href="#"> CONV 3 </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Main content -->
+      <main class="col-span-8">MAIN CONTENT</main>
+    </div>
+  </body>
+</html>
