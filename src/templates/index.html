@@ -4,34 +4,68 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <title>GPTArchive</title>
+    <title>GPT Archive</title>
   </head>
-  <body class="bg-neutral-800 text-white">
-    <!-- Title from backend: {{ text }} -->
-    <div class="grid grid-cols-10 gap-4 p-10">
+  <body
+    class="bg-neutral-800 text-white flex flex-col justify-between min-h-[125dvh]"
+  >
+    <div class="grid grid-cols-10 gap-4 p-10 h-screen">
       <!-- Sidebar -->
-      <div class="col-span-2">
+      <div class="col-span-2 overflow-auto">
+        <button
+          type="button"
+          class="cursor-pointer bg-neutral-900 hover:bg-neutral-950 px-4 py-2 rounded mb-10 text-lg"
+        >
+          New Conversation
+        </button>
         <ul class="flex flex-col gap-2">
+          {% for conversation in conversations %}
           <li
             class="cursor-pointer rounded bg-neutral-600 px-3 py-1 transition-all"
           >
-            <a href="#"> CONV 1 </a>
+            <a href="/conversations/{{ conversation['conversation_id'] }}">
+              {{conversation['title']}}
+            </a>
           </li>
-          <li
-            class="cursor-pointer rounded hover:bg-neutral-600 px-3 py-1 transition-all"
-          >
-            <a href="#"> CONV 2 </a>
-          </li>
-          <li
-            class="cursor-pointer rounded hover:bg-neutral-600 px-3 py-1 transition-all"
-          >
-            <a href="#"> CONV 3 </a>
-          </li>
+          {% endfor %}
         </ul>
       </div>
 
       <!-- Main content -->
-      <main class="col-span-8">MAIN CONTENT</main>
+      <main class="col-span-8 lg:p-10 h-screen overflow-auto">
+        {% if home %}
+        <!-- Fallback text -->
+        <div class="flex flex-col gap-4 justify-center items-center h-full">
+          <h4 class="text-5xl font-semibold">GPT Archive</h4>
+          <p>
+            Select one conversation on the left side, or save new conversation.
+          </p>
+        </div>
+        {% else %}
+
+        <!-- Content -->
+        <div
+          class="flex flex-col gap-10 justify-center items-center min-h-screen p-4 pb-20 w-full"
+        >
+          {% for text in conversation['text'] %}
+          <section class="flex justify-end">
+            <div class="bg-neutral-900 rounded-2xl p-6 w-4/6">
+              {{text['user']}}
+            </div>
+          </section>
+          <section class="flex justify-start">
+            <div class="bg-neutral-900 rounded-2xl p-6 w-full">
+              {{text['assistant']}}
+            </div>
+          </section>
+          {%endfor%}
+        </div>
+
+        {% endif %}
+      </main>
     </div>
+    <footer class="bg-neutral-950 p-10 text-center">
+      <p>Copyright (c) 2025 Ahmad Reza Adrian</p>
+    </footer>
   </body>
 </html>
