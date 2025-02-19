@@ -4,10 +4,17 @@ The project has the following structure:
 
 ```
 .
-├── .gitignore
-├── README.md
-├── requirements.txt
-└── scrape.py
+chatgpt_scraper/
+│── .venv/                # Virtual environment
+│── src/
+│   ├── scrape.py
+│   ├── db.py
+│   ├── config.py
+│── .gitignore
+│── LICENSE
+│── README.md
+│── requirements.txt
+
 ```
 
 - `.gitignore`: Specifies files and directories to be ignored by git.

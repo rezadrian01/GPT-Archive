@@ -3,9 +3,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from json import dumps
+
 from bs4 import BeautifulSoup
 
-def scrape(url, timeout = 10):
+def scrape(url, timeout = 1000):
   # Headless browser
   options = webdriver.ChromeOptions()
   options.add_argument('--headless')
@@ -42,15 +44,25 @@ def scrape(url, timeout = 10):
   
   return user_chat, assistant_chat
 
-url = "https://chatgpt.com/share/67b560a2-b364-8010-83ce-fb50f8ce0151"
+# url = "https://chatgpt.com/share/67b560a2-b364-8010-83ce-fb50f8ce0151"
+url = "https://chatgpt.com/share/67b57980-4f48-8010-95df-de4b0da848d3"
 
 user_chat, assitant_chat = scrape(url)
 
 print(f"User chat: (total: {len(user_chat)})")
 for chat in user_chat:
-  print(chat)
+  # print(chat)
+  pass
 
 print(f"Assistant chat: (total: {len(assitant_chat)})")
 for chat in assitant_chat:
-  print(chat)
+  # print(chat)
+  pass
 
+result = []
+for i in range(len(user_chat)):
+  result.append({"role": "user", "text": user_chat[i]})
+  if i < len(assitant_chat):
+    result.append({"role": "assistant", "text": assitant_chat[i]})
+  
+print(dumps(result, ensure_ascii=False))
