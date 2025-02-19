@@ -7,12 +7,23 @@ from json import dumps
 
 from bs4 import BeautifulSoup
 
-def scrape(url, timeout = 1000):
+def scrape(url, timeout = 1000, headless = False):
+  """
+    input: 
+      url: url of the conversation
+      timeout: time to wait until the page is loaded
+    output:
+      user_chat: list of user chat
+      assistant_chat: list of assistant chat
+  """
   # Headless browser
   options = webdriver.ChromeOptions()
   options.add_argument('--headless')
 
-  driver = webdriver.Chrome()
+  driver = webdriver.Chrome() if not headless else webdriver.Chrome(options = options)
+
+  # driver = webdriver.Chrome(options = options)
+
   driver.get(url)
   try:
     # Wait until chat elements has been loaded
@@ -45,24 +56,24 @@ def scrape(url, timeout = 1000):
   return user_chat, assistant_chat
 
 # url = "https://chatgpt.com/share/67b560a2-b364-8010-83ce-fb50f8ce0151"
-url = "https://chatgpt.com/share/67b57980-4f48-8010-95df-de4b0da848d3"
+# url = "https://chatgpt.com/share/67b57980-4f48-8010-95df-de4b0da848d3"
 
-user_chat, assitant_chat = scrape(url)
+# user_chat, assitant_chat = scrape(url)
 
-print(f"User chat: (total: {len(user_chat)})")
-for chat in user_chat:
-  # print(chat)
-  pass
+# print(f"User chat: (total: {len(user_chat)})")
+# for chat in user_chat:
+#   # print(chat)
+#   pass
 
-print(f"Assistant chat: (total: {len(assitant_chat)})")
-for chat in assitant_chat:
-  # print(chat)
-  pass
+# print(f"Assistant chat: (total: {len(assitant_chat)})")
+# for chat in assitant_chat:
+#   # print(chat)
+#   pass
 
-result = []
-for i in range(len(user_chat)):
-  result.append({"role": "user", "text": user_chat[i]})
-  if i < len(assitant_chat):
-    result.append({"role": "assistant", "text": assitant_chat[i]})
+# result = []
+# for i in range(len(user_chat)):
+#   result.append({"role": "user", "text": user_chat[i]})
+#   if i < len(assitant_chat):
+#     result.append({"role": "assistant", "text": assitant_chat[i]})
   
-print(dumps(result, ensure_ascii=False))
+# print(dumps(result, ensure_ascii=False))
