@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from db import create_table, insert_conversation, get_conversations, get_conversation_by_id
 import json
 from scrape import scrape
@@ -31,9 +31,13 @@ def get_conversation(conversation_id):
 
 @app.route('/insert', methods = ["POST"])
 def insert_conversation_route():
-    req_data = request.get_json()
-    title = req_data['title']
-    link = req_data['link']
+    # req_data = request.get_json()
+    # title = req_data['title']
+    # link = req_data['link']
+
+    title = request.form.get('title')
+    link = request.form.get('link')
+
     user_chat, assitant_chat =  scrape(link, headless=True)
     text = []
     lowercased_text = []
@@ -49,7 +53,8 @@ def insert_conversation_route():
         lowercased_text.append({"user": user_chat[i].lower(), "assistant": assitant_chat[i].lower()})
     
     insert_conversation(title, link, text, lowercased_text)
-    return "Conversation inserted"
+    # return "Conversation inserted"
+    return redirect('/')
 
 if __name__ == '__main__':
     create_table()
