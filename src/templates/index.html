@@ -12,6 +12,7 @@
       referrerpolicy="no-referrer"
     />
     <title>GPT Archive</title>
+    <title>GPT Archive</title>
   </head>
   <body
     class="bg-neutral-800 text-white flex flex-col justify-between min-h-[125dvh]"
@@ -60,6 +61,7 @@
     </div>
 
     <div class="grid grid-cols-10 gap-4 h-screen">
+
       <!-- Sidebar -->
       <div class="col-span-3 overflow-auto bg-neutral-950/30 w-full p-4">
         <button
@@ -73,6 +75,7 @@
           {% for curr_conv in conversations %}
           <li
             class="cursor-pointer rounded {{'bg-neutral-600' if conversaation and conversation['conversation_id'] == curr_conv['conversation_id'] else 'hover:bg-neutral-600'}} px-3 py-1 transition-all group flex justify-between items-center relative"
+
           >
             <a
               class="w-full"
