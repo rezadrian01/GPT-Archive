@@ -67,3 +67,27 @@ def get_conversation_by_id(conversation_id):
         cursor.close()
         conn.close()
         return conversation
+
+def update_conversation_by_id(conversation_id, title):
+    """Update a single conversation by ID"""
+    conn = connect_db()
+    if conn:
+        cursor = conn.cursor()
+        query = "UPDATE Conversations SET title = %s WHERE conversation_id = %s"
+        cursor.execute(query, (title, conversation_id))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        print("Conversation succesfully updated.")
+
+def delete_conversation_by_id(conversation_id):
+    """Delete a single conversation by ID"""
+    conn = connect_db()
+    if conn:
+        cursor = conn.cursor()
+        query = "DELETE FROM Conversations WHERE conversation_id = %s"
+        cursor.execute(query, (conversation_id,))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        print("Conversation succesfully deleted.")

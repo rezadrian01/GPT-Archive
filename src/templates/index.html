@@ -4,13 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <title>GPT Archive</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <title>GPT Archive</title>
   </head>
   <body
     class="bg-neutral-800 text-white flex flex-col justify-between min-h-[125dvh]"
   >
-    <!--  Modal  -->
+    <!--  Insert Modal  -->
     <div
       onclick="toggleInsertModal()"
       id="modal-overlay"
@@ -53,7 +59,7 @@
       </form>
     </div>
 
-    <div class="grid grid-cols-10 gap-4 p-4 h-screen">
+    <div class="grid grid-cols-10 gap-4 h-screen">
       <!-- Sidebar -->
       <div class="col-span-3 overflow-auto bg-neutral-950/30 w-full p-4">
         <button
@@ -66,7 +72,7 @@
         <ul class="flex flex-col gap-2">
           {% for curr_conv in conversations %}
           <li
-            class="cursor-pointer rounded {{'bg-neutral-600' if conversaation and conversation['conversation_id'] == curr_conv['conversation_id'] else 'hover:bg-neutral-600'}} px-3 py-1 transition-all"
+            class="cursor-pointer rounded {{'bg-neutral-600' if conversaation and conversation['conversation_id'] == curr_conv['conversation_id'] else 'hover:bg-neutral-600'}} px-3 py-1 transition-all group flex justify-between items-center relative"
           >
             <a
               class="w-full"
@@ -74,6 +80,29 @@
             >
               {{curr_conv['title']}}
             </a>
+            <button
+              id="conv-action-btn-{{curr_conv['conversation_id']}}"
+              class="hidden group-hover:block cursor-pointer rounded-full w-3 aspect-square font-bold conv-action-btn"
+            >
+              :
+            </button>
+            <div
+              id="conv-action-modal-{{curr_conv['conversation_id']}}"
+              class="absolute z-20 right-0 top-8 bg-neutral-900 hidden flex-col rounded p-1 conv-action-modal"
+            >
+              <ul class="flex flex-col gap-2">
+                <li class="hover:bg-neutral-800 py-2 px-4 rounded">
+                  <button class="cursor-pointer">Rename</button>
+                </li>
+                <li class="hover:bg-neutral-800 py-2 px-4 rounded">
+                  <button class="cursor-pointer">Delete</button>
+                </li>
+              </ul>
+            </div>
+            <div
+              id="conv-action-modal-overlay-{{curr_conv['conversation_id']}}"
+              class="fixed inset-0 conv-action-modal-overlay hidden cursor-default"
+            ></div>
           </li>
           {% endfor %}
         </ul>
@@ -93,7 +122,7 @@
 
         <!-- Content -->
         <div
-          class="flex flex-col gap-10 justify-center items-center min-h-screen p-4 pb-20 w-full"
+          class="flex flex-col gap-10 justify-start items-center min-h-screen p-4 pb-20 w-full"
         >
           {% for text in conversation['text'] %}
           <section class="flex justify-end w-full">

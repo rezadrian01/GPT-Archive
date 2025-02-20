@@ -8,15 +8,7 @@ from json import dumps
 
 from bs4 import BeautifulSoup
 
-def scrape(url, timeout = 1000, headless = False):
-  """
-    input: 
-      url: url of the conversation
-      timeout: time to wait until the page is loaded
-    output:
-      user_chat: list of user chat
-      assistant_chat: list of assistant chat
-  """
+
 def scrape(url, timeout = 1000, headless = False):
   """
     input: 
@@ -63,10 +55,8 @@ def scrape(url, timeout = 1000, headless = False):
   while retries < max_retries and not user_chat:
     print(f"Retrying... {retries + 1}")
     time.sleep(2)
-    # user_chat = [chat.text for chat in driver.find_elements(By.CSS_SELECTOR, 'div[data-message-author-role="user"]')]
-    # assistant_chat = [chat.text for chat in driver.find_elements(By.CSS_SELECTOR, 'div[data-message-author-role="assistant"]')]
-    user_chat = [chat.get_text() for chat in user_chat_elements]
-    assistant_chat = [chat.get_text() for chat in assistant_chat_elements]
+    user_chat = [chat.text.strip() for chat in driver.find_elements(By.CSS_SELECTOR, 'div[data-message-author-role="user"]')]
+    assistant_chat = [chat.text.strip() for chat in driver.find_elements(By.CSS_SELECTOR, 'div[data-message-author-role="assistant"]')]
     retries += 1
   
   return user_chat, assistant_chat
