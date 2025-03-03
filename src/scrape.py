@@ -8,16 +8,6 @@ from json import dumps
 
 from bs4 import BeautifulSoup
 
-
-def scrape(url, timeout = 1000, headless = False):
-  """
-    input: 
-      url: url of the conversation
-      timeout: time to wait until the page is loaded
-    output:
-      user_chat: list of user chat
-      assistant_chat: list of assistant chat
-  """
 def scrape(url, timeout = 1000, headless = False):
   """
     input: 
