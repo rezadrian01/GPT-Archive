@@ -14,7 +14,8 @@ def index():
     
     # print(json.loads(conversations[0]['text']))
     
-    return render_template('index.html', conversations=conversations, home = True)
+    return render_template('home.html', conversations=conversations, home = True)
+    # return render_template('index.html', conversations=conversations, home = True)
 
 @app.route('/login', methods = ['GET'])
 def login():
@@ -23,6 +24,14 @@ def login():
 @app.route('/register', methods = ['GET'])
 def register():
     return render_template('register.html')
+
+@app.route('/home', methods =['GET'])
+def home():
+    conversations = get_conversations()
+    for conversation in conversations:
+        conversation['text'] = json.loads(conversation['text'])
+    return render_template('home.html', conversations=conversations, home = True)
+
 
 @app.route('/conversations/<int:conversation_id>', methods = ['GET'])
 def get_conversation(conversation_id):
@@ -34,7 +43,7 @@ def get_conversation(conversation_id):
     if not conversation:
         return "Conversation not found"
     
-    return render_template('index.html', conversations = conversations, conversation=conversation, home = False)
+    return render_template('home.html', conversations = conversations, conversation=conversation, home = False)
     
 
 @app.route('/insert', methods = ["POST"])
