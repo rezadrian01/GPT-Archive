@@ -110,8 +110,8 @@
                     data-dropdown-toggle="dropdown-user"
                   >
                     <span class="sr-only">Open user menu</span>
-                    <span class="w-8 h-8 rounded-full flex items-center justify-center bg-gray-200">
-                      AR
+                    <span class="w-8 h-8 rounded-full flex items-center justify-center bg-gray-200 uppercase">
+                      {{user['username'][0]}}
                     </span>
                   </button>
                 </div>
@@ -124,13 +124,13 @@
                       class="text-sm text-gray-900 dark:text-white"
                       role="none"
                     >
-                      Neil Sims
+                      {{user['username']}}
                     </p>
                   </div>
                   <ul class="py-1" role="none">
                     <li>
                       <a
-                        href="/login"
+                        href="/logout"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                         role="menuitem"
                         >Sign out</a
