@@ -50,8 +50,7 @@ def load_user(user_id):
 @app.route('/', methods = ['GET'])
 @login_required
 def index():
-    conversations = Conversation.query.all()
-    print(type(conversations))
+    conversations = Conversation.query.filter_by(user_id=current_user.id).all()
     for conversation in conversations:
         print("conversation", conversation)
         conversation.text = json.loads(conversation.text)
@@ -114,7 +113,11 @@ def logout():
 @app.route('/conversations/<int:conversation_id>', methods = ['GET'])
 @login_required
 def get_conversation(conversation_id):
-    conversations = Conversation.query.all()
+    conversations = Conversation.query.filter_by(user_id=current_user.id).all()
+
+    if len(conversations) == 0:
+        return redirect('/')
+
     for conversation in conversations:
         conversation.text = json.loads(conversation.text)
     conversation = next((conversation for conversation in conversations if conversation.conversation_id == conversation_id))
@@ -122,6 +125,9 @@ def get_conversation(conversation_id):
     if not conversation:
         return "Conversation not found"
     
+    if conversation.user_id != current_user.id:
+        return redirect('/')
+
     return render_template('home.html', conversations = conversations, conversation=conversation, home = False, user = current_user)
     
 
