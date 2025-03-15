@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=
+  , initial-scale=1.0"
+    />
+    <link href="../static/css/output.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js" integrity="sha512-EBLzUL8XLl+va/zAsmXwS7Z2B1F9HUHkZwyS/VKwh3S7T/U0nF4BaU29EP/ZSf6zgiIxYAnKLu6bJ8dqpmX5uw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+     <!-- Highlight.js CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    
+    <!-- Load Popular Languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/csharp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/ruby.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/php.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/swift.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/kotlin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/rust.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+
+    <script>hljs.highlightAll();</script>
+    <title>Home</title>
+  </head>
+  <body class="bg-white relative">
+    <!-- Modal -->
+    <div
+      onclick="toggleInsertModal()"
+      id="modal-overlay"
+      class="fixed inset-0 bg-black/60 hidden z-60"
+    ></div>
+    <div
+      id="insert-modal"
+      class="fixed z-[80] w-[30rem] -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 bg-slate-50 rounded-xl px-10 pb-10 py-6 hidden"
+    >
+      <h3 class="text-center font-semibold text-xl mb-4 text-gray-900">
+        Insert GPT Conversation
+      </h3>
+      <form class="flex flex-col gap-4" action="/insert" method="post">
+        <div>
+            <label for="title" class="block mb-2 text-sm font-medium text-gray-900">Conversation Title</label>
+            <input 
+            type="text"
+            name="title"
+            id="title"
+            placeholder="Example"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5"  required />
+        </div>
+        <div>
+            <label for="link" class="block mb-2 text-sm font-medium text-gray-900 ">Conversation Link</label>
+            <input 
+            type="text"
+            name="link"
+            id="link"
+            placeholder="https://example.com"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5"  required />
+        </div>
+        <div>
+          <button
+            type="submit"
+            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded cursor-pointer w-full"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+    <div>
+      <nav
+        class="fixed top-0 z-50 w-full bg-white border-b border-gray-200"
+      >
+        <div class="px-3 py-3 lg:px-5 lg:pl-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center justify-start rtl:justify-end">
+              <button
+                data-drawer-target="logo-sidebar"
+                data-drawer-toggle="logo-sidebar"
+                aria-controls="logo-sidebar"
+                type="button"
+                class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+              >
+                <span class="sr-only">Open sidebar</span>
+                <svg
+                  class="w-6 h-6"
+                  aria-hidden="true"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    clip-rule="evenodd"
+                    fill-rule="evenodd"
+                    d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+                  ></path>
+                </svg>
+              </button>
+              <a href="/" class="flex ms-2 md:me-24">
+                <span
+                  class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap"
+                  >GPT Archive</span
+                >
+              </a>
+            </div>
+            <div class="flex items-center">
+              <div class="flex items-center ms-3">
+                <div>
+                  <button
+                    type="button"
+                    class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300"
+                    aria-expanded="false"
+                    data-dropdown-toggle="dropdown-user"
+                  >
+                    <span class="sr-only">Open user menu</span>
+                    <span class="w-8 h-8 rounded-full flex items-center justify-center bg-gray-200 uppercase">
+                      {{user['username'][0]}}
+                    </span>
+                  </button>
+                </div>
+                <div
+                  class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm "
+                  id="dropdown-user"
+                >
+                  <div class="px-4 py-3 min-w-[10rem]" role="none">
+                    <p
+                      class="text-sm text-gray-900 "
+                      role="none"
+                    >
+                      {{user['username']}}
+                    </p>
+                  </div>
+                  <ul class="py-1" role="none">
+                    <li>
+                      <a
+                        href="/logout"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        role="menuitem"
+                        >Sign out</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <aside
+        id="logo-sidebar"
+        class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 "
+        aria-label="Sidebar"
+      >
+        <div class="h-full px-3 pb-4 overflow-y-auto bg-white ">
+          <button
+          onclick="toggleInsertModal()"
+          type="button"
+          class="cursor-pointer text-gray-700 bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded mb-4 text-lg"
+        >
+          New Conversation
+        </button>
+          <ul class="space-y-2 font-medium">
+            <!-- Conversations -->
+             {% for curr_conv in conversations %}
+            <li>
+              <a
+                href="/conversations/{{ curr_conv['conversation_id'] }}"
+                class="flex items-center p-2 text-gray-900 rounded-lg group {{'bg-gray-100' if conversation and conversation['conversation_id'] == curr_conv['conversation_id'] else 'hover:bg-gray-100'}}"
+              >
+                <span class="ms-3 line-clamp-1">
+                  {{curr_conv['title']}}
+                </span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </aside>
+
+      <div class="p-4 sm:ml-64 relative overflow-hidden">
+        <!-- Circle Elements -->
+        <div
+          class="bg-[#25D1BC] aspect-square w-[25rem] rounded-full absolute -top-[15rem] lg:-top-44 -left-[15rem] lg:-left-44 blur-[10rem] -z-10"
+        ></div>
+        <div
+          class="bg-[#4481F9] aspect-square w-[25rem] rounded-full absolute -bottom-[15rem] lg:-bottom-44 -right-[15rem] lg:-right-44 blur-[10rem] -z-10"
+        ></div>
+        <div
+          class="p-4 border-2 border-gray-200 rounded-lg mt-14 min-h-full"
+        >
+          <div class="flex items-center gap-4 mb-4 min-h-[85dvh] text-gray-900 ">
+          <!-- Main content -->
+           {% if home %}
+              <!-- Fallback text -->
+              <div class="flex flex-col gap-4 justify-center items-center h-full w-full text-center">
+                <h4 class="text-5xl font-semibold">GPT Archive</h4>
+                <p>
+                  Select one conversation on the left side, or save new conversation.
+                </p>
+              </div>
+            {% else %}
+
+              <!-- Content -->
+              <div
+                class="flex flex-col gap-10 justify-start items-center min-h-screen p-4 pb-20 w-full"
+                >
+                <div class="flex gap-4">
+                  <a class="hover:scale-105 transition-all px-4 py-2 rounded-lg {{'bg-blue-500 text-white' if is_lower != 1 else ''}}" href="?lower=0">Original Text</a>
+                  <a class="hover:scale-105 transition-all px-4 py-2 rounded-lg {{'bg-blue-500 text-white' if is_lower == 1 else ''}}" href="?lower=1">Lowercased Text</a>
+                </div>
+                {% set curr_text = conversation['text'] if is_lower == 0 else conversation['lowercased_text'] %}
+               
+                {% for text in curr_text %}
+                  <section class="flex justify-end w-full">
+                    <div class="bg-gray-200 rounded-2xl p-6 w-11/12 md:w-5/6 shadow-lg">
+                      {{ text['user'] }}
+                    </div>
+                  </section>
+                  <section class="flex justify-start w-full">
+                    <div class="bg-gray-200 rounded-2xl p-6 w-11/12 md:w-5/6 shadow-lg">
+                      {% if is_lower == 0 %}
+                        {{ text['assistant']|safe }}
+                      {% else %}
+                        {{ text['assistant'] }}
+                      {% endif %}
+                    </div>
+                  </section>
+                {% endfor %}
+              </div>
+
+            {% endif %}
+        </div>
+      </div>
+    </div>
+    <script src="/static/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+  </body>
+</html>
