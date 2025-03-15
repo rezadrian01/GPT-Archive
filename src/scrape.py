@@ -8,6 +8,11 @@ from json import dumps
 
 from bs4 import BeautifulSoup
 
+def wait_for_text(driver, selector, timeout=10):
+    WebDriverWait(driver, timeout).until(
+        lambda d: d.find_element(By.CSS_SELECTOR, selector).text.strip() != ""
+    )
+
 def scrape(url, timeout = 1000, headless = False):
   """
     input: 
@@ -16,6 +21,7 @@ def scrape(url, timeout = 1000, headless = False):
     output:
       user_chat: list of user chat
       assistant_chat: list of assistant chat
+      assistant_chat_raw: list of assistant chat (raw)
   """
   # Headless browser
   options = webdriver.ChromeOptions()
@@ -26,12 +32,14 @@ def scrape(url, timeout = 1000, headless = False):
   driver.get(url)
   try:
     # Wait until chat elements has been loaded
-    WebDriverWait(driver, timeout).until(
-        EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'div[data-message-author-role="user"]'))
-    )
-    WebDriverWait(driver, timeout).until(
-        EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'div[data-message-author-role="assistant"]'))
-    )
+    # WebDriverWait(driver, timeout).until(
+    #     EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'div[data-message-author-role="user"]'))
+    # )
+    # WebDriverWait(driver, timeout).until(
+    #     EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'div[data-message-author-role="assistant"]'))
+    # )
+    wait_for_text(driver, 'div[data-message-author-role="user"]', timeout=timeout)
+    wait_for_text(driver, 'div[data-message-author-role="assistant"]', timeout=timeout)
     print("Page loaded")
   except:
     print("Timeout")
@@ -47,18 +55,25 @@ def scrape(url, timeout = 1000, headless = False):
   driver.quit()
 
   user_chat = [chat.get_text() for chat in user_chat_elements]
-  assistant_chat = [chat.get_text() for chat in assistant_chat_elements]
+  assistant_chat = [str(chat) for chat in assistant_chat_elements]
+  assistant_chat_raw = [chat.get_text() for chat in assistant_chat_elements]
+  
 
   max_retries = 3
   retries = 0
   while retries < max_retries and not user_chat:
     print(f"Retrying... {retries + 1}")
     time.sleep(2)
-    user_chat = [chat.text.strip() for chat in driver.find_elements(By.CSS_SELECTOR, 'div[data-message-author-role="user"]')]
-    assistant_chat = [chat.text.strip() for chat in driver.find_elements(By.CSS_SELECTOR, 'div[data-message-author-role="assistant"]')]
+    html = driver.page_source
+    soup = BeautifulSoup(html, 'html.parser')
+    user_chat_elements = soup.find_all('div', attrs={'data-message-author-role': 'user'})
+    assistant_chat_elements = soup.find_all('div', attrs={'data-message-author-role': 'assistant'})
+    user_chat = [chat.get_text() for chat in user_chat_elements]
+    assistant_chat = [str(chat) for chat in assistant_chat_elements]
+    assistant_chat_raw = [chat.get_text() for chat in assistant_chat_elements]
     retries += 1
   
-  return user_chat, assistant_chat
+  return user_chat, assistant_chat, assistant_chat_raw
 
 if __name__ == '__main__':
   # url = "https://chatgpt.com/share/67b560a2-b364-8010-83ce-fb50f8ce0151"
