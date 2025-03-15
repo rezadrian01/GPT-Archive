@@ -48,7 +48,7 @@
     <div
       onclick="toggleInsertModal()"
       id="modal-overlay"
-      class="fixed inset-0 bg-black/60 hidden z-50"
+      class="fixed inset-0 bg-black/60 hidden z-60"
     ></div>
     <div
       id="insert-modal"
@@ -65,16 +65,16 @@
             name="title"
             id="title"
             placeholder="Example"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"  required />
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5"  required />
         </div>
         <div>
-            <label for="link" class="block mb-2 text-sm font-medium text-gray-900 ">Conversation Title</label>
+            <label for="link" class="block mb-2 text-sm font-medium text-gray-900 ">Conversation Link</label>
             <input 
             type="text"
             name="link"
             id="link"
             placeholder="https://example.com"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"  required />
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5"  required />
         </div>
         <div>
           <button
@@ -223,19 +223,29 @@
               <!-- Content -->
               <div
                 class="flex flex-col gap-10 justify-start items-center min-h-screen p-4 pb-20 w-full"
-              >
-                {% for text in conversation['text'] %}
-                <section class="flex justify-end w-full">
-                  <div class="bg-gray-200 rounded-2xl p-6 w-11/12 md:w-5/6 shadow-lg">
-                    {{text['user']}}
-                  </div>
-                </section>
-                <section class="flex justify-start w-full">
-                  <div class="bg-gray-200 rounded-2xl p-6 w-11/12 md:w-5/6 shadow-lg">
-                    {{text['assistant']|safe}}
-                  </div>
-                </section>
-                {%endfor%}
+                >
+                <div class="flex gap-4">
+                  <a class="hover:scale-105 transition-all px-4 py-2 rounded-lg {{'bg-blue-500 text-white' if is_lower != 1 else ''}}" href="?lower=0">Original Text</a>
+                  <a class="hover:scale-105 transition-all px-4 py-2 rounded-lg {{'bg-blue-500 text-white' if is_lower == 1 else ''}}" href="?lower=1">Lowercased Text</a>
+                </div>
+                {% set curr_text = conversation['text'] if is_lower == 0 else conversation['lowercased_text'] %}
+               
+                {% for text in curr_text %}
+                  <section class="flex justify-end w-full">
+                    <div class="bg-gray-200 rounded-2xl p-6 w-11/12 md:w-5/6 shadow-lg">
+                      {{ text['user'] }}
+                    </div>
+                  </section>
+                  <section class="flex justify-start w-full">
+                    <div class="bg-gray-200 rounded-2xl p-6 w-11/12 md:w-5/6 shadow-lg">
+                      {% if is_lower == 0 %}
+                        {{ text['assistant']|safe }}
+                      {% else %}
+                        {{ text['assistant'] }}
+                      {% endif %}
+                    </div>
+                  </section>
+                {% endfor %}
               </div>
 
             {% endif %}

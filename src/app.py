@@ -56,7 +56,7 @@ def index():
     
     # print(json.loads(conversations[0].text))
     
-    return render_template('home.html', conversations=conversations, home = True, user = current_user)
+    return render_template('home.html', conversations=conversations, home = True, user = current_user, is_lower = 0)
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -116,22 +116,22 @@ def logout():
 @app.route('/conversations/<int:conversation_id>', methods = ['GET'])
 @login_required
 def get_conversation(conversation_id):
+    is_lower = request.args.get('lower', default=0, type=int)
     conversations = Conversation.query.filter_by(user_id=current_user.id).all()
-
+    print(is_lower)
     if len(conversations) == 0:
         return redirect('/')
 
     for conversation in conversations:
         conversation.text = json.loads(conversation.text)
+        conversation.lowercased_text = json.loads(conversation.lowercased_text)
     conversation = next((conversation for conversation in conversations if conversation.conversation_id == conversation_id))
     
     if not conversation:
         return "Conversation not found"
-    
     if conversation.user_id != current_user.id:
         return redirect('/')
-
-    return render_template('home.html', conversations = conversations, conversation=conversation, home = False, user = current_user)
+    return render_template('home.html', conversations = conversations, conversation=conversation, home = False, user = current_user, is_lower = is_lower)
     
 
 @app.route('/insert', methods = ["POST"])
