@@ -49,13 +49,13 @@ const initialize = () => {
           console.log({ text });
 
           // Copy to clipboard
-          navigator.clipboard
-            .writeText(text)
-            .then(() => {
-              button.textContent = "Copied!";
-              setTimeout(() => (button.textContent = "Copy"), 1500);
-            })
-            .catch((err) => console.error("Gagal menyalin teks:", err));
+          if (window.isSecureContext && navigator.clipboard) {
+            navigator.clipboard.writeText(text);
+          } else {
+            unsecuredCopyToClipboard(text);
+          }
+          button.textContent = "Copied!";
+          setTimeout(() => (button.textContent = "Copy"), 1500);
         }
       }
     });
