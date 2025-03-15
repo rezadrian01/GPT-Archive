@@ -26,7 +26,42 @@ const initialize = () => {
 
   // calling the function
   initializeEventListenersActionModal();
+
+  const buttons = document.querySelectorAll('button[aria-label="Copy"]');
+
+  buttons.forEach((button) => {
+    // Button styling
+    button.textContent = "Copy";
+    button.style.background = "#4CAF50";
+    button.style.color = "white";
+    button.style.border = "none";
+    button.style.padding = "5px 10px";
+    button.style.borderRadius = "5px";
+    button.style.cursor = "pointer";
+
+    // Adding event listener
+    button.addEventListener("click", function () {
+      const pre = button.closest("pre");
+      if (pre) {
+        const code = pre.querySelector("code");
+        if (code) {
+          const text = code.innerText;
+          console.log({ text });
+
+          // Copy to clipboard
+          navigator.clipboard
+            .writeText(text)
+            .then(() => {
+              button.textContent = "Copied!";
+              setTimeout(() => (button.textContent = "Copy"), 1500);
+            })
+            .catch((err) => console.error("Gagal menyalin teks:", err));
+        }
+      }
+    });
+  });
 };
+
 initialize();
 
 const insertConvModal = () => {

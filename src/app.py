@@ -46,13 +46,12 @@ class Conversation(db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-
 @app.route('/', methods = ['GET'])
 @login_required
 def index():
     conversations = Conversation.query.filter_by(user_id=current_user.id).all()
     for conversation in conversations:
-        print("conversation", conversation)
+        # print("conversation", conversation)
         conversation.text = json.loads(conversation.text)
     
     # print(json.loads(conversations[0].text))
@@ -69,11 +68,13 @@ def login():
 
     # Basic validation
     if not username.strip() or not password.strip():
-        return "Error: Username or password is empty"
+        # return "Error: Username or password is empty"
+        return render_template('login.html', username = username, password = password, error = True, error_msg = "Username or password is empty")
 
     existing_user = User.query.filter_by(username=username).first()
     if not existing_user or not check_password_hash(existing_user.password, password):
-        return "Error: Invalid username or password"
+        # return "Error: Invalid username or password"
+        return render_template('login.html', username = username, password = password, error = True, error_msg = "Invalid username or password")
 
     login_user(existing_user)
     return redirect('/')
@@ -90,11 +91,13 @@ def register():
 
     # Basic validation
     if not username.strip() or not password.strip():
-        return "Error: Username or password is empty"
+        # return "Error: Username or password is empty"
+        return render_template('register.html', username = username, password = password, error = True, error_msg = "Username or password is empty")
 
     existing_user = User.query.filter_by(username=username).first()
     if existing_user:
-        return "Error: Username already exists"
+        # return "Error: Username already exists"
+        return render_template('register.html', username = username, password = password, error = True, error_msg = "Username already exists")
 
     hashed_password = generate_password_hash(password)
     new_user = User(username=username, password = hashed_password)
@@ -141,7 +144,7 @@ def insert_conversation_route():
     title = request.form.get('title')
     link = request.form.get('link')
 
-    user_chat, assitant_chat =  scrape(link, headless=True)
+    user_chat, assitant_chat, assistant_chat_raw =  scrape(link, headless=True)
     text = []
     lowercased_text = []
 
@@ -153,7 +156,7 @@ def insert_conversation_route():
     
     for i in range(len(user_chat)):
         text.append({"user": user_chat[i], "assistant": assitant_chat[i]})
-        lowercased_text.append({"user": user_chat[i].lower(), "assistant": assitant_chat[i].lower()})
+        lowercased_text.append({"user": user_chat[i].lower(), "assistant": assistant_chat_raw[i].lower()})
     
     new_conv = Conversation(user_id = current_user.id, title = title, link = link, text = json.dumps(text), lowercased_text = json.dumps(lowercased_text))
     db.session.add(new_conv)
