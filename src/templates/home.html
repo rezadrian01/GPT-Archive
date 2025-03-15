@@ -7,7 +7,7 @@
       content="width=
   , initial-scale=1.0"
     />
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link href="../static/css/output.css" rel="stylesheet" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -15,13 +15,35 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js" integrity="sha512-EBLzUL8XLl+va/zAsmXwS7Z2B1F9HUHkZwyS/VKwh3S7T/U0nF4BaU29EP/ZSf6zgiIxYAnKLu6bJ8dqpmX5uw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link
       href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css"
       rel="stylesheet"
     />
-    <title>Register</title>
+     <!-- Highlight.js CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    
+    <!-- Load Popular Languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/csharp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/ruby.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/php.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/swift.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/kotlin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/rust.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+
+    <script>hljs.highlightAll();</script>
+    <title>Home</title>
   </head>
-  <body class="bg-white dark:bg-gray-600">
+  <body class="bg-white relative">
     <!-- Modal -->
     <div
       onclick="toggleInsertModal()"
@@ -30,34 +52,34 @@
     ></div>
     <div
       id="insert-modal"
-      class="fixed z-[80] w-[30rem] -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 bg-slate-50 dark:bg-gray-600 rounded-xl px-10 pb-10 py-6 hidden"
+      class="fixed z-[80] w-[30rem] -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 bg-slate-50 rounded-xl px-10 pb-10 py-6 hidden"
     >
-      <h3 class="text-center font-semibold text-xl mb-4 text-gray-900 dark:text-white">
+      <h3 class="text-center font-semibold text-xl mb-4 text-gray-900">
         Insert GPT Conversation
       </h3>
       <form class="flex flex-col gap-4" action="/insert" method="post">
         <div>
-            <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Conversation Title</label>
+            <label for="title" class="block mb-2 text-sm font-medium text-gray-900">Conversation Title</label>
             <input 
             type="text"
             name="title"
             id="title"
             placeholder="Example"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required />
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"  required />
         </div>
         <div>
-            <label for="link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Conversation Title</label>
+            <label for="link" class="block mb-2 text-sm font-medium text-gray-900 ">Conversation Title</label>
             <input 
             type="text"
             name="link"
             id="link"
             placeholder="https://example.com"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required />
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"  required />
         </div>
         <div>
           <button
             type="submit"
-            class="bg-blue-500 hover:bg-blue-600 dark:bg-gray-800 dark:hover:bg-gray-900 text-white px-4 py-2 rounded cursor-pointer w-full"
+            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded cursor-pointer w-full"
           >
             Save
           </button>
@@ -66,7 +88,7 @@
     </div>
     <div>
       <nav
-        class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700"
+        class="fixed top-0 z-50 w-full bg-white border-b border-gray-200"
       >
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
           <div class="flex items-center justify-between">
@@ -76,7 +98,7 @@
                 data-drawer-toggle="logo-sidebar"
                 aria-controls="logo-sidebar"
                 type="button"
-                class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
               >
                 <span class="sr-only">Open sidebar</span>
                 <svg
@@ -95,7 +117,7 @@
               </button>
               <a href="/" class="flex ms-2 md:me-24">
                 <span
-                  class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white"
+                  class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap"
                   >GPT Archive</span
                 >
               </a>
@@ -105,7 +127,7 @@
                 <div>
                   <button
                     type="button"
-                    class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                    class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300"
                     aria-expanded="false"
                     data-dropdown-toggle="dropdown-user"
                   >
@@ -116,12 +138,12 @@
                   </button>
                 </div>
                 <div
-                  class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm dark:bg-gray-700 dark:divide-gray-600"
+                  class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm "
                   id="dropdown-user"
                 >
                   <div class="px-4 py-3 min-w-[10rem]" role="none">
                     <p
-                      class="text-sm text-gray-900 dark:text-white"
+                      class="text-sm text-gray-900 "
                       role="none"
                     >
                       {{user['username']}}
@@ -131,7 +153,7 @@
                     <li>
                       <a
                         href="/logout"
-                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         role="menuitem"
                         >Sign out</a
                       >
@@ -146,14 +168,14 @@
 
       <aside
         id="logo-sidebar"
-        class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+        class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 "
         aria-label="Sidebar"
       >
-        <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+        <div class="h-full px-3 pb-4 overflow-y-auto bg-white ">
           <button
           onclick="toggleInsertModal()"
           type="button"
-          class="cursor-pointer text-gray-700 dark:text-gray-100 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-4 py-2 rounded mb-4 text-lg"
+          class="cursor-pointer text-gray-700 bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded mb-4 text-lg"
         >
           New Conversation
         </button>
@@ -163,7 +185,7 @@
             <li>
               <a
                 href="/conversations/{{ curr_conv['conversation_id'] }}"
-                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white  group {{'bg-gray-100 dark:bg-gray-700' if conversation and conversation['conversation_id'] == curr_conv['conversation_id'] else 'hover:bg-gray-100 dark:hover:bg-gray-700'}}"
+                class="flex items-center p-2 text-gray-900 rounded-lg group {{'bg-gray-100' if conversation and conversation['conversation_id'] == curr_conv['conversation_id'] else 'hover:bg-gray-100'}}"
               >
                 <span class="ms-3 line-clamp-1">
                   {{curr_conv['title']}}
@@ -175,15 +197,22 @@
         </div>
       </aside>
 
-      <div class="p-4 sm:ml-64">
+      <div class="p-4 sm:ml-64 relative overflow-hidden">
+        <!-- Circle Elements -->
         <div
-          class="p-4 border-2 border-gray-200 rounded-lg dark:border-gray-700 mt-14 min-h-full"
+          class="bg-[#25D1BC] aspect-square w-[25rem] rounded-full absolute -top-[15rem] lg:-top-44 -left-[15rem] lg:-left-44 blur-[10rem] -z-10"
+        ></div>
+        <div
+          class="bg-[#4481F9] aspect-square w-[25rem] rounded-full absolute -bottom-[15rem] lg:-bottom-44 -right-[15rem] lg:-right-44 blur-[10rem] -z-10"
+        ></div>
+        <div
+          class="p-4 border-2 border-gray-200 rounded-lg mt-14 min-h-full"
         >
-          <div class="flex items-center gap-4 mb-4 min-h-[80dvh] text-gray-900 dark:text-white">
+          <div class="flex items-center gap-4 mb-4 min-h-[85dvh] text-gray-900 ">
           <!-- Main content -->
            {% if home %}
               <!-- Fallback text -->
-              <div class="flex flex-col gap-4 justify-center items-center h-full w-full">
+              <div class="flex flex-col gap-4 justify-center items-center h-full w-full text-center">
                 <h4 class="text-5xl font-semibold">GPT Archive</h4>
                 <p>
                   Select one conversation on the left side, or save new conversation.
@@ -197,13 +226,13 @@
               >
                 {% for text in conversation['text'] %}
                 <section class="flex justify-end w-full">
-                  <div class="bg-gray-200 dark:bg-gray-700 rounded-2xl p-6 w-11/12 md:w-5/6 shadow-lg">
+                  <div class="bg-gray-200 rounded-2xl p-6 w-11/12 md:w-5/6 shadow-lg">
                     {{text['user']}}
                   </div>
                 </section>
                 <section class="flex justify-start w-full">
-                  <div class="bg-gray-200 dark:bg-gray-700 rounded-2xl p-6 w-11/12 md:w-5/6 shadow-lg">
-                    {{text['assistant']}}
+                  <div class="bg-gray-200 rounded-2xl p-6 w-11/12 md:w-5/6 shadow-lg">
+                    {{text['assistant']|safe}}
                   </div>
                 </section>
                 {%endfor%}
