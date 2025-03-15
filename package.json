@@ -1,0 +1,16 @@
+{
+  "name": "gpt-archive",
+  "version": "1.0.0",
+  "description": "The project has the following structure:",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tailwind": "npx @tailwindcss/cli -i ./src/static/css/input.css -o ./src/static/css/output.css --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.0.14",
+    "tailwindcss": "^4.0.14"
+  }
+}
