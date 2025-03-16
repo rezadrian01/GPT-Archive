@@ -85,7 +85,7 @@ def login():
 def register():
     if request.method == 'GET':
         return render_template('register.html')
-
+    
     username = request.form.get('username')
     password = request.form.get('password')
 
@@ -98,7 +98,7 @@ def register():
     if existing_user:
         # return "Error: Username already exists"
         return render_template('register.html', username = username, password = password, error = True, error_msg = "Username already exists")
-
+    
     hashed_password = generate_password_hash(password)
     new_user = User(username=username, password = hashed_password)
     db.session.add(new_user)

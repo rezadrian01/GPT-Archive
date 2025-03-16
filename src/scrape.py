@@ -23,7 +23,7 @@ def scrape(url, timeout = 1000, headless = False):
       assistant_chat: list of assistant chat
       assistant_chat_raw: list of assistant chat (raw)
   """
-  # Headless browser
+  # Options browser
   options = webdriver.ChromeOptions()
   options.add_argument('--headless')
   options.add_argument('--no-sandbox')
@@ -49,12 +49,13 @@ def scrape(url, timeout = 1000, headless = False):
   html = driver.page_source
   soup = BeautifulSoup(html, 'html.parser')
 
+  # Close the browser
+  driver.quit()
+
   # Get all chat elements with user and assistant roles
   user_chat_elements = soup.find_all('div', attrs={'data-message-author-role': 'user'})
   assistant_chat_elements = soup.find_all('div', attrs={'data-message-author-role': 'assistant'})
 
-  # Close the browser
-  driver.quit()
 
   user_chat = [chat.get_text() for chat in user_chat_elements]
   assistant_chat = [str(chat) for chat in assistant_chat_elements]
