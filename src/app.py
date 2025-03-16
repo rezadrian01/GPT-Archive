@@ -56,7 +56,7 @@ def index():
     
     # print(json.loads(conversations[0].text))
     
-    return render_template('home.html', conversations=conversations, home = True, user = current_user, is_lower = 0)
+    return render_template('home.html', total_conversations = len(conversations), conversations=conversations, home = True, user = current_user, is_lower = 0)
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -85,7 +85,7 @@ def login():
 def register():
     if request.method == 'GET':
         return render_template('register.html')
-
+    
     username = request.form.get('username')
     password = request.form.get('password')
 
@@ -98,7 +98,7 @@ def register():
     if existing_user:
         # return "Error: Username already exists"
         return render_template('register.html', username = username, password = password, error = True, error_msg = "Username already exists")
-
+    
     hashed_password = generate_password_hash(password)
     new_user = User(username=username, password = hashed_password)
     db.session.add(new_user)
@@ -131,7 +131,7 @@ def get_conversation(conversation_id):
         return "Conversation not found"
     if conversation.user_id != current_user.id:
         return redirect('/')
-    return render_template('home.html', conversations = conversations, conversation=conversation, home = False, user = current_user, is_lower = is_lower)
+    return render_template('conversation.html', conversations = conversations, conversation=conversation, home = False, user = current_user, is_lower = is_lower)
     
 
 @app.route('/insert', methods = ["POST"])
