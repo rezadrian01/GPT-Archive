@@ -60,6 +60,18 @@ const initialize = () => {
       }
     });
   });
+
+  // Format dates in elements with class 'created-at'
+  const createdAtElements = document.querySelectorAll(".created-at");
+  createdAtElements.forEach((element) => {
+    const date = new Date(element.textContent.trim());
+    const formattedDate = date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    element.textContent = formattedDate;
+  });
 };
 
 initialize();
